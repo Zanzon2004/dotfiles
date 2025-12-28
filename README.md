@@ -29,8 +29,8 @@ The recommended way to install these dotfiles is using **GNU Stow**.
 Clone the repository into your home directory:
 
 ```bash
-git clone <this-repo-url>
-cd <this-repo>
+git clone https://github.com/Zanzon2004/dotfiles.git
+cd dotfiles
 ```
 Then stow everything:
 ```bash
