@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions.
+export WM="dwm"
+case "$(readlink -f /sbin/init)" in
+	*systemd*) ctl='systemctl' ;;
+	*) ctl='loginctl' ;;
+esac
+
+wmpid(){ echo "$(pidof dwm)"; }
+
+lock(){
+    mpc pause
+    pauseallmpv
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    kill -44 $(pidof dwmblocks)
+    slock -m "$(cowsay -W 30 "Locked at $(date '+%a %d, %H:%M:%S') Type Password to Unlock...")"
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    kill -44 $(pidof dwmblocks)
+}
+
+case "$(printf " lock\n leave $WM\n renew $WM\n renew dwmblocks\n hibernate\n reboot\n shutdown\n sleep\n display off" | dmenu -i -c -l 6 -p 'Action: ')" in
+    ' lock') lock ;;
+    " leave $WM") kill -TERM "$(wmpid)" ;;
+    " renew $WM") kill -HUP "$(wmpid)" ;;
+    " renew dwmblocks") pkill -RTMIN+10 $(pidof dwmblocks) ;;
+    ' hibernate') slock $ctl hibernate -i ;;
+    ' sleep') slock $ctl suspend -i ;;
+    ' reboot') $ctl reboot -i ;;
+    ' shutdown') $ctl poweroff -i ;;
+    ' display off') xset dpms force off ;;
+    *) exit 1 ;;
+esac

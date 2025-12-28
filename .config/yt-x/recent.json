@@ -1,0 +1,38 @@
+{
+  "entries": [
+    {
+      "_type": "url",
+      "ie_key": "Youtube",
+      "id": "b2Y9z29Py44",
+      "url": "https://www.youtube.com/watch?v=b2Y9z29Py44",
+      "title": "Saharetna'l Basmate",
+      "description": null,
+      "duration": 374.0,
+      "channel_id": "UCKXmVTvVMQz_fggy66HlgQQ",
+      "channel": "Fairuz",
+      "channel_url": "https://www.youtube.com/channel/UCKXmVTvVMQz_fggy66HlgQQ",
+      "uploader": "Fairuz",
+      "uploader_id": null,
+      "uploader_url": null,
+      "thumbnails": [
+        {
+          "url": "https://i.ytimg.com/vi/b2Y9z29Py44/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLA9erW8H2qVkAtP1RuiLWAp-A7y1Q",
+          "height": 202,
+          "width": 360
+        },
+        {
+          "url": "https://i.ytimg.com/vi/b2Y9z29Py44/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAxu5k2q9C7WARnThMxb246ZRywgQ",
+          "height": 404,
+          "width": 720
+        }
+      ],
+      "timestamp": null,
+      "release_timestamp": null,
+      "availability": null,
+      "view_count": 97854,
+      "live_status": null,
+      "channel_is_verified": true,
+      "__x_forwarded_for_ip": null
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+
+FOLDER="$HOME/Pictures/Wallpapers" # Wallpaper folder
+SCRIPT="$HOME/.local/bin/after-pywal" # Script to run after wal for refreshing programs, etc.
+BACKEND="colorthief" # Specify a backend to use. See $(wal --backend).
+
+menu (){
+		# Requires nsxiv (can be done with dmenu)
+		CHOICE=$(nsxiv -otb $FOLDER/*)
+		
+		case $CHOICE in
+				*.*) wal -i "$CHOICE" --backend "$BACKEND" -o $SCRIPT;; 
+				*) exit 0 ;;
+		esac
+}
+
+case "$#" in
+		0) menu ;;
+		1) wal -i "$1" --backend "$BACKEND" -o $SCRIPT ;;
+		2) wal -i "$1" --theme $2 -o $SCRIPT ;;
+		*) exit 0 ;;
+esac

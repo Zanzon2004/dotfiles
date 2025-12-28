@@ -1,0 +1,38 @@
+# programs
+super + w
+    $BROWSER
+
+super + {p, r, R, W, e}
+    $TERMINAL -e {rmpc, lf, htop, nmtui, neomutt}
+
+
+# controlers
+XF86Audio{LowerVolume,RaiseVolume,Mute}
+    volumectl {lower,raise,toggle}
+
+XF86MonBrightness{Up,Down}
+    sudo brightnessctl set {+5%,5%-} && pkill -RTMIN+20 dwmblocks
+
+
+# screenshots
+Print
+    maim $HOME/Pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png
+
+shift + Print
+    maim -s $HOME/Pictures/Screenshots/pic-selected-$(date '+%y%m%d-%H%M-%S').png
+
+
+# scripts
+super + control + {w,p,c,q}
+    $HOME/.local/bin/{wallpapermenu,toggle-play play,define,kill-list}
+
+super + {BackSpace,n,v,c,KP_Divide}
+    $HOME/.local/bin/{sysact,notes,textclip sel,textclip add,books}
+
+Pause
+    $HOME/.local/bin/toggle-play toggle
+
+
+# reload sxhkd
+super + control + r
+    kill -10 $(pidof sxhkd) && notify-send -t 5000 "sxhkd loaded"

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+case "$#" in
+    4) 
+        ALBUMPATH="$1"
+        ARTIST="$2"
+        ALBUMNAME="$3"
+        GENRE="$4"
+        ;;
+    *)
+        echo "Usage: music-md <album_path> <artist_name> <album_name> <genre>"
+        exit 1
+        ;;
+esac
+
+# Ensure ALBUMPATH ends with a slash
+[[ "${ALBUMPATH: -1}" != "/" ]] && ALBUMPATH="$ALBUMPATH/"
+
+# Loop over files safely
+find "$ALBUMPATH" -maxdepth 1 -type f | while IFS= read -r song; do
+    filename=$(basename "$song")
+    # Remove leading numbers if present (e.g., "01 - song.mp3" -> "song.mp3")
+    cleanname=$(echo "$filename" | sed 's/^[0-9]\+[-_. ]*//')
+    name="${cleanname%.*}"        # filename without extension
+    extension="${cleanname##*.}"  # extension
+
+    newfile="$ALBUMPATH$name.$extension"
+
+    # Rename the file safely
+    mv -n "$song" "$newfile"
+
+    # Add metadata including genre
+    ffmpeg -y -i "$newfile" \
+        -map_metadata 0 \
+        -metadata title="$name" \
+        -metadata artist="$ARTIST" \
+        -metadata album="$ALBUMNAME" \
+        -metadata genre="$GENRE" \
+        -codec copy "$ALBUMPATH/tmp_$name.$extension"
+
+    # Replace original with updated file
+    mv -f "$ALBUMPATH/tmp_$name.$extension" "$newfile"
+done
+
+# Update mpc database
+mpc update

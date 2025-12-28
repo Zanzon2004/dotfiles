@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    lower) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- ;;
+    raise) wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ ;;
+    toggle) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+esac
+
+kill -RTMIN+8 $(pidof dwmblocks)
+

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+status=$(mpc status 2>/dev/null)
+[ -z "$status" ] && exit 0
+
+state=$(printf '%s\n' "$status" | awk 'NR==2 {print $1}')
+
+# Get only the song title
+title=$(mpc current --format "%title%" 2>/dev/null)
+[ -z "$title" ] && title="Unknown Title"
+
+# Remove (feat ...) if present
+title=$(echo "$title" | sed -E 's/\s*\((feat|ft|featuring).*\)//i' | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+# Assign icon based on player state
+if [ "$state" = "[playing]" ]; then
+    icon=' 󰏤'
+    echo "$icon $title"
+elif [ "$state" = "[paused]" ]; then
+    icon=' ▶'
+    echo "$icon $title"
+else
+    icon=' 󰓛'
+    echo "$icon Nothing Playing"
+fi
+

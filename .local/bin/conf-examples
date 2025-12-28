@@ -1,0 +1,6 @@
+#!/bin/bash
+
+exfile="/usr/share/doc/"
+choice="$(ls "$exfile" | dmenu -c -l 10 -p "Choose a folder: ")" || exit 0
+config="$(ls "$exfile$choice" | dmenu -c -l 10 -p "Choose a config file: ")" || exit 0
+$TERMINAL -e $EDITOR "$exfile$choice/$config" &> /dev/null

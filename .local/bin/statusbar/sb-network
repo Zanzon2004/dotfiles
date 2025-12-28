@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+nmcli -t -f GENERAL.CONNECTION dev show | \
+awk -F: '/:/ { print ($2 == "" || $2 == "lo") ? "down" : $2; exit }'

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+toggle () {
+		status="$(mpc | awk 'NR==2 {gsub(/[\[\]]/, "", $1); print $1}')"
+		[[ "$status" == "playing" ]] && mpc pause || mpc play
+}
+
+play () {
+		choice="$(mpc listall | dmenu -i -l 15 -b -p "Choose a track: ")" || exit 0
+		[-z "$choice"] || mpc insert "$choice" && mpc next &> /dev/null 
+}
+
+case "$1" in
+		toggle) toggle ;;
+		play) play ;;
+esac

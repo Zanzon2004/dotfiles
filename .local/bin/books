@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Directory containing PDFs
+dir="$HOME/Documents/Books/"
+
+# Find all PDFs
+# pdf_file=$(find "$dir" -type f -name '*.pdf' | fzf \
+#     --preview 'pdftotext {} - | head -n 50 | bat -l tex -p' \
+#     --preview-window=up:60%:wrap \
+#     --height=50% \
+#     --border \
+#     --prompt="Select a PDF: " )
+pdf_file=$(ls "$dir" | dmenu -i -l 20 -b -p "Select a PDF: ") || exit 0
+
+# Only open if user selected something
+if [[ -n "$pdf_file" ]]; then
+    /usr/bin/zathura "$dir$pdf_file" &> /dev/null &
+fi
+

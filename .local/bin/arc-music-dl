@@ -1,0 +1,15 @@
+#!/bin/bash
+
+search="$(printf "" | dmenu -c -p "Search for an item: ")" || exit 0
+
+album="$(ia search "$search" | awk -F'"' '{print $4}' | dmenu -c -l 15 -p "Choose an item to list: ")" || exit 0
+
+list="$(ia list "$album" | grep -Ei '\.(mp3|flac|ogg|m4a|aac|wav)$')"
+
+track="$( printf '%s\n%s' "Album" "$list" | dmenu -c -l 10 -p "Download Album or a specific track: ")" || exit 0
+
+case "$track" in
+    Album) ia download "$album" --glob="*.mp3|*.m4a|*.flac|*.ogg|*.wav|*.aac" && notify-send "Downloaded album $album" && mpc update ;;
+    *) ia download "$album" "$track" && notify-send "Downloaded track $track" ;;
+esac
+

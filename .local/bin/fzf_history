@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+# Select a command from history and print it for shell to read
+tac $HOME/.local/share/history | fzf --height=50% --border \
+  | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//; s/[[:space:]]+/ /g' \
+  | head -c -1 
+

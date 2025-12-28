@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Get process list
+process=$(ps -e -o pid=,user=,args= --sort=user \
+  | dmenu -i -l 20 -p "Select process to kill:") || exit 0
+
+# Extract PID, USER, and COMMAND
+PID=$(echo "$process" | awk '{print $1}')
+USER=$(echo "$process" | awk '{print $2}')
+NAME=$(echo "$process" | cut -d' ' -f3-)
+
+# Confirm and kill the process
+if [[ $(id -un) == "$USER" ]] || [[ $(id -u) -eq 0 ]]; then
+    kill "$PID" && notify-send "Killed $NAME ($PID)"
+else
+    notify-send "Permission denied: Cannot kill $NAME ($PID) owned by $USER"
+fi

@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# ls aliases
+alias ls='ls --color=auto' 
+alias dir='dir --color=auto' 
+alias vdir='vdir --color=auto' 
+alias grep='grep --color=auto' 
+alias fgrep='fgrep --color=auto' 
+alias egrep='egrep --color=auto' 
+
+# LC_COLLATE=C to list dot files first
+alias ll='LC_COLLATE=C ls -alF'
+alias la='LC_COLLATE=C ls -A'
+alias l='ls -CF'
+
+# package manager aliases
+alias i='sudo pacman -S'
+alias q='pacman -Ss'
+alias u='sudo pacman -Syu'
+alias r='sudo pacman -Rns'
+alias f='pacman -Qi'
+
+# used aliases
+alias whatsapp='zen --new-window https://web.whatsapp.com/ &> /dev/null &'
+alias v='nvim'
+alias pipes='pipes.sh'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# this alias is specifically for zsh because they have a builtin command that displays signals in an annoying way
+alias kill='/usr/bin/kill' 
+
+# function to fzf-preview-open with $EDITOR
+vf() {
+    file=$(fzf --preview "less {}" --height=50% --border --prompt="Select a file: ")
+    if [[ -n "$file" ]]; then
+        $EDITOR "$file"
+    fi
+}
+

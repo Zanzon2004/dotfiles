@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# -R restores the last colorscheme that was in use.
+wal -R 
+
+# Start status bar
+dwmblocks &
+
+# sxhkd
+sxhkd &
+
+# dunst
+dunst &
+
+# picom
+picom &
+
+# script for music
+musicctl &
+
+# Enable natural scrolling (replace Touchpad Name)
+xinput set-prop "ASUP1205:00 093A:2003 Touchpad" "libinput Natural Scrolling Enabled" 1
+
+# Enable Tabbing
+xinput set-prop "ASUP1205:00 093A:2003 Touchpad" "libinput Tapping Enabled" 1
+
+# turn of screen saving 
+xset s off
+xset -dpms
+xset s noblank
+
+# keyboard layout and escape <-> capslock for vim
+setxkbmap -layout us,ara -variant ,digits -option grp:shifts_toggle caps:escape
+
+# X env vars
+ERRFILE="$XDG_CACHE_HOME/X11/xsession-errors"
+USERXSESSION="$XDG_CACHE_HOME/X11/xsession"
+
+# Start dwm
+exec dwm
+

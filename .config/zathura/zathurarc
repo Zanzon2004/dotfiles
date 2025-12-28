@@ -1,0 +1,60 @@
+# Base16 Nord
+# Author: Arctic Ice Studio
+
+set selection-clipboard clipboard
+
+# --- Default colors ---
+set default-fg                  "#D8DEE9"
+#set default-bg                  "#2E3440"
+set default-bg                  "#000000"
+
+# --- Status bar ---
+set statusbar-fg                "#D8DEE9"
+set statusbar-bg                "#434C5E"
+
+# --- Input bar ---
+set inputbar-bg                 "#2E3440"
+set inputbar-fg                 "#8FBCBB"
+
+# --- Notifications ---
+set notification-bg             "#2E3440"
+set notification-fg             "#8FBCBB"
+
+set notification-error-bg       "#2E3440"
+set notification-error-fg       "#BF616A"
+
+set notification-warning-bg     "#2E3440"
+set notification-warning-fg     "#EBCB8B"
+
+# --- Completion menu ---
+set completion-bg               "#3B4252"
+set completion-fg               "#81A1C1"
+set completion-highlight-fg     "#8FBCBB"
+set completion-highlight-bg     "#81A1C1"
+
+# --- Index view ---
+set index-bg                    "#2E3440"
+set index-fg                    "#D8DEE9"
+set index-active-fg             "#D8DEE9"
+set index-active-bg             "#3B4252"
+
+# --- Document recolor (classic black background) ---
+set recolor                     true
+set recolor-keephue             true
+set recolor-lightcolor          "#000000"  # background
+set recolor-darkcolor           "#FFFFFF"  # text
+
+# --- Font ---
+set font "JetBrains Mono 11"
+
+# --- opening width ---
+set adjust-open "best-fit"
+
+
+# --- Keybindings ---
+map r recolor
+map R reload
+map u scroll half-up
+map d scroll half-down
+map w adjust_window width
+map W adjust_window best-fit

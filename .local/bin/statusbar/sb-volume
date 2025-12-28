@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+awk '{ if ($3 == "[MUTED]") print "M"; else printf("%d%%", $2 * 100) }'

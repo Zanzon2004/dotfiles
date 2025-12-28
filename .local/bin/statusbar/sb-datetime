@@ -1,0 +1,3 @@
+#!/bin/bash
+
+printf "%(%H:%M %a, %b %e)T\\n"

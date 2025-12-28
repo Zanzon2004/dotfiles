@@ -1,0 +1,3 @@
+set hidden! # include hidden files
+set ignorecase
+# set relativenumber

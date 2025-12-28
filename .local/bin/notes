@@ -1,0 +1,40 @@
+#!/bin/bash
+
+folder=$HOME/Documents/Notes/
+
+newnote () { \
+  dir="$(command ls "$folder" | dmenu -c -l 5 -i -p 'Choose directory: ')"|| exit 0
+  name="$(echo "" | dmenu -c -p "Enter a name: " <&-)" || exit 0
+  : "${name:=$(date +%F_%H-%M-%S)}"
+  setsid -f "$TERMINAL" -e nvim "$folder$dir/$name.md" >/dev/null 2>&1
+}
+
+remove () { \
+    dir="$(command ls "$folder" | dmenu -c -l 5 -i -p 'Choose directory: ')"|| exit 0
+    choice=$folder$dir
+    [ -z "$(ls "$choice")" ] && notify-send "The directory is empty." && exit 0
+    note="$(ls "$folder$dir" | dmenu -c -l 5 -p 'Choose a note to remove: ')" || exit 0
+    rm "$folder$dir/$note" && notify-send -u normal "removed $note"
+}
+
+open () { \
+    dir="$(command ls "$folder" | dmenu -c -l 5 -i -p 'Choose directory: ')"|| exit 0
+    choice=$folder$dir
+    [ -z "$(ls "$choice")" ] && notify-send -u low "The directory is empty." && exit 0
+    note="$(ls "$folder$dir" | dmenu -c -l 5 -p 'Choose a note to open: ')" || exit 0
+    setsid -f "$TERMINAL" -e nvim "$folder$dir/$note" >/dev/null 2>&1
+}
+
+selected () { \
+  choice=$(
+    echo -e "New\nOpen\nRemove" | dmenu -c -l 5 -i -p "Choose an option: "
+  )
+  case $choice in
+    New) newnote ;;
+    Remove) remove ;;
+    Open) open ;;
+    *) exit ;;
+  esac
+}
+
+selected

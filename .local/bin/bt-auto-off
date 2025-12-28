@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check if Bluetooth is powered on
+power_status=$(bluetoothctl show | grep "Powered:" | awk '{print $2}')
+
+if [ "$power_status" != "yes" ]; then
+    echo "Bluetooth is already off."
+    exit 0
+fi
+
+# Get list of connected devices
+connected=$(bluetoothctl info | grep "Connected: yes" | wc -l)
+
+if [ "$connected" -gt 0 ]; then
+    echo "Connected devices:"
+    bluetoothctl devices Connected | grep "Device"
+else
+    echo "No connected devices. Turning Bluetooth off..." && bluetoothctl power off 
+fi

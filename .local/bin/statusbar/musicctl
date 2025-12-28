@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+STATUSBAR=dwmblocks
+
+while :; do
+    # wait for MPD events; blocks until something happens
+    mpc idle | while read -r _; do
+        pkill -RTMIN+2 "$STATUSBAR"
+    done
+    # sleep 1  # prevents tight loop if MPD dies/restarts
+done
+

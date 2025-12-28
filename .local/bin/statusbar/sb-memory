@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+free -h | \
+awk '/^Mem/ { printf("%s", $3) }' | \
+sed 's/i//g'
+
