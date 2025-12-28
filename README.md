@@ -1,6 +1,6 @@
 # My Dotfiles
 
-This repository contains my personal Arch Linux dotfiles.  
+This repository contains my personal Arch Linux dotfiles including my personal scripts.  
 Most of them should work on any Linux distribution with minimal adjustment.
 
 At the moment, the focus is on **user-level configuration**, but some **root-level / system-wide configs** also exist and will be added gradually in the future where it makes sense.
@@ -18,13 +18,13 @@ In that sense, this repo is also a small social experiment: a public record of h
 
 I’ve tried to comment things as clearly as possible, and I’ll keep improving readability as the setup grows.
 
-I’ll also try to list dependencies where it makes sense—but you’re a big guy, right?
+I’ll also try to list dependencies where it makes sense, but you’re a big guy, right?
 
 ---
 
 ## Setup
 
-The recommended way to install these dotfiles is using **GNU Stow**.
+The recommended way to install these dotfiles is using [**GNU Stow**](https://www.gnu.org/software/stow/).
 
 Clone the repository into your home directory:
 
