@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+vid="$(xclip -o -selection primary)" && notify-send "opening $vid..."
+mpv "$vid"

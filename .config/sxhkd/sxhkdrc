@@ -26,6 +26,8 @@ shift + Print
 super + control + {w,p,c,q}
     $HOME/.local/bin/{wallpapermenu,toggle-play play,define,kill-list}
 
+super + control + slash
+    ytclip
 super + {BackSpace,n,v,c,KP_Divide}
     $HOME/.local/bin/{sysact,notes,textclip sel,textclip add,books}
 
