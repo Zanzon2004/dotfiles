@@ -5,6 +5,7 @@ ZSH_OPTS="$XDG_CONFIG_HOME/zsh/opts.zsh"
 ZSH_PROMPT="$XDG_CONFIG_HOME/zsh/prompt.zsh"
 ZSH_HIGHLIGHT="$XDG_CONFIG_HOME/zsh/highlighting.zsh"
 ALIASRC="$XDG_CONFIG_HOME/shell/aliasrc"
+LESSVARS="$XDG_CONFIG_HOME/shell/lessvars.sh"
 
 # --- Environment & Aliases ---
 # To ensure XDG_CONFIG_HOME always has a value if not specified in the profile
@@ -26,6 +27,11 @@ bindkey '^R' fzf-history-widget # cycle hist with fzf
 
 # --- zoxide ---
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
+
+# --- bat / manpages ---
+# export BAT_THEME="GitHub"
+[ -f "$LESSVARS" ] && source "$LESSVARS"
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
 
 # --- Prompt / Banner ---
 [ -f "$ZSH_PROMPT" ] && source "$ZSH_PROMPT"
