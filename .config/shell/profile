@@ -26,11 +26,8 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/gitconfig"
 export GIT_CREDENTIAL_STORE="$XDG_DATA_HOME/git/credentials"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-
-export MOZ_USE_XINPUT2=1        # Mozilla smooth scrolling/touchpads.
-
-# bootstrap .zshrc to ~/.config/zsh/.zshrc, any other zsh config files can also reside here
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export MOZ_USE_XINPUT2=1        # Mozilla smooth scrolling/touchpads.
 
 # history files
 export LESSHISTFILE="$XDG_CACHE_HOME/less_history"
@@ -38,7 +35,6 @@ export PYTHON_HISTORY="$XDG_DATA_HOME/python/history"
 
 export FZF_DEFAULT_OPTS="--style minimal --color 16 --layout=reverse --height 30% --preview='bat -p --color=always {}'"
 export FZF_CTRL_R_OPTS="--style minimal --color 16 --info inline --no-sort --no-preview" # separate opts for history widget
-export MANPAGER="less -R -i -S -F -X" # colored man pages
 
 # if running bash
 # if [ -n "$BASH_VERSION" ]; then

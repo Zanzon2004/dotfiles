@@ -42,6 +42,7 @@ Plug('folke/twilight.nvim') --surrounding dim
 -- Plug('nvim-lua/plenary.nvim') --for telescope
 -- Plug('nvim-telescope/telescope.nvim') --for navigating stuff (see :help telescope.bultin)
 
+
 vim.call('plug#end')
 
 -- move config and plugin config to alternate files
@@ -73,7 +74,8 @@ vim.defer_fn(function()
 		--this only makes a difference of +-10ms on initial startup
 require("plugins.autopairs")
 require("plugins.fterm")
-require("plugins.fzf-lua")
+-- require("plugins.fzf-lua")
+-- require("plugins.telescope")
 require("plugins.nvim-tree")
 require("plugins.treesitter")
 require("plugins.twilight")
