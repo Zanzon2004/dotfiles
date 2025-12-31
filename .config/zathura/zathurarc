@@ -1,7 +1,4 @@
-# Base16 Nord
-# Author: Arctic Ice Studio
-
-set selection-clipboard clipboard
+# set selection-clipboard clipboard
 
 # --- Default colors ---
 set default-fg                  "#D8DEE9"
@@ -31,12 +28,6 @@ set completion-bg               "#3B4252"
 set completion-fg               "#81A1C1"
 set completion-highlight-fg     "#8FBCBB"
 set completion-highlight-bg     "#81A1C1"
-
-# --- Index view ---
-set index-bg                    "#2E3440"
-set index-fg                    "#D8DEE9"
-set index-active-fg             "#D8DEE9"
-set index-active-bg             "#3B4252"
 
 # --- Document recolor (classic black background) ---
 set recolor                     true
