@@ -8,10 +8,8 @@ DMENUPATH="$HOME/Personal-Build/dmenu"
 
 # Rebuild and install dwm and dmenu
 # These assume the user is in the wheel group (see sudo visudo)
-[ -d "$DWMPATH" ] && (cd "$DWMPATH" && [ -f config.def.h ] && [ -f config.h ] && rm -f config.h && sudo make clean install)
-
-[ -d "$DMENUPATH" ] && (cd "$DMENUPATH" && [ -f config.def.h ] && [ -f config.h ] && rm -f config.h && sudo make clean install)
-
+[ -d "$DWMPATH" ] && (cd "$DWMPATH" && [ -f config.def.h ] && [ -f config.h ] && rm -f config.h; sudo make install clean)
+[ -d "$DMENUPATH" ] && (cd "$DMENUPATH" && [ -f config.def.h ] && [ -f config.h ] && rm -f config.h; sudo make install clean) 
 # Reload dwm
 kill -HUP $(pidof dwm) # requires restartsig dwm patch 
 
