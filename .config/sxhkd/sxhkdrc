@@ -28,6 +28,7 @@ super + control + {w,p,c,q}
 
 super + control + slash
     ytclip
+
 super + {BackSpace,n,v,c,KP_Divide}
     $HOME/.local/bin/{sysact,notes,textclip sel,textclip add,books}
 
