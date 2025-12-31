@@ -16,18 +16,14 @@ XF86MonBrightness{Up,Down}
 
 # screenshots
 Print
-    maim $HOME/Pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png
-
-shift + Print
-    maim -s $HOME/Pictures/Screenshots/pic-selected-$(date '+%y%m%d-%H%M-%S').png
-
+    $HOME/.local/bin/shotmenu
 
 # scripts
 super + control + {w,p,c,q}
     $HOME/.local/bin/{wallpapermenu,toggle-play play,define,kill-list}
 
-super + control + slash
-    ytclip
+super + apostrophe
+    $HOME/.local/bin/ytclip
 
 super + {BackSpace,n,v,c,KP_Divide}
     $HOME/.local/bin/{sysact,notes,textclip sel,textclip add,books}

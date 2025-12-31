@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+case "$(echo -e "Full\nSelect\nWindow" | dmenu -c -l 3 -p 'Choose a type: ')" in
+		# the sleep here because the scr is captured instantaneously that dmenu can't escape it! so this allows dmenu to disappear.
+		Full) sleep 0.2 && maim $HOME/Pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png ;;
+		Select) maim -s $HOME/Pictures/Screenshots/pic-selected-$(date '+%y%m%d-%H%M-%S').png ;;
+		Window) maim -i "$(xdotool selectwindow)" $HOME/Pictures/Screenshots/pic-window-$(date '+%y%m%d-%H%M-%S').png ;;
+esac
