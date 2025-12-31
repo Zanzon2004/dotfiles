@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
 
-case "$(echo -e "Full\nSelect\nWindow" | dmenu -c -l 3 -p 'Choose a type: ')" in
-		# the sleep here because the scr is captured instantaneously that dmenu can't escape it! so this allows dmenu to disappear.
-		Full) sleep 0.2 && maim $HOME/Pictures/Screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png ;;
-		Select) maim -s $HOME/Pictures/Screenshots/pic-selected-$(date '+%y%m%d-%H%M-%S').png ;;
-		Window) maim -i "$(xdotool selectwindow)" $HOME/Pictures/Screenshots/pic-window-$(date '+%y%m%d-%H%M-%S').png ;;
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+
+TYPE=$(echo -e "full\nselect\nwindow" | dmenu -c -l 3 -p 'choose a type: ')
+
+# Timestamp for unique filenames
+TIMESTAMP=$(date '+%y%m%d-%H%M-%S')
+
+case "$TYPE" in
+    full)
+        sleep 0.2  # small delay so dmenu closes before screenshot
+        FILE="$SCREENSHOT_DIR/pic-full-$TIMESTAMP.png"
+        maim "$FILE"  # capture full screen
+        xclip -selection clipboard -t image/png -i "$FILE"  
+        ;;
+    select)
+        FILE="$SCREENSHOT_DIR/pic-selected-$TIMESTAMP.png"
+        maim -s "$FILE"  # capture selected area
+        xclip -selection clipboard -t image/png -i "$FILE"  
+        ;;
+    window)
+        WIN_ID=$(xdotool selectwindow)  # let user click a window
+        FILE="$SCREENSHOT_DIR/pic-window-$TIMESTAMP.png"
+        maim -i "$WIN_ID" "$FILE"  # capture selected window
+        xclip -selection clipboard -t image/png -i "$FILE"  
+        ;;
 esac
