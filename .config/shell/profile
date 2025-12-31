@@ -26,6 +26,7 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/gitconfig"
 export GIT_CREDENTIAL_STORE="$XDG_DATA_HOME/git/credentials"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export PARALLEL_HOME="$XDG_CONFIG_HOME/parallel"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export MOZ_USE_XINPUT2=1        # Mozilla smooth scrolling/touchpads.
 
