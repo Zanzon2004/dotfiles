@@ -23,7 +23,7 @@ case "$(printf " lock\n leave $WM\n renew $WM\n renew dwmblocks\n hibernate\n re
     ' lock') lock ;;
     " leave $WM") kill -TERM "$(wmpid)" ;;
     " renew $WM") kill -HUP "$(wmpid)" ;;
-    " renew dwmblocks") pkill -RTMIN+10 $(pidof dwmblocks) ;;
+    " renew dwmblocks") kill -10 $(pidof dwmblocks) ;;
     ' hibernate') slock $ctl hibernate -i ;;
     ' sleep') slock $ctl suspend -i ;;
     ' reboot') $ctl reboot -i ;;
