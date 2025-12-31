@@ -1,15 +1,71 @@
 #!/bin/bash
 
-search="$(printf "" | dmenu -c -p "Search for an item: ")" || exit 0
+# This is a script to manage downloading music from archive.org
+# Dependencies: python-internetarchive (Arch) & fzf & mpc
+# Of course do not forget to make this executable
+# Usage: arc-music-dl <Search_Term>
 
-album="$(ia search "$search" | awk -F'"' '{print $4}' | dmenu -c -l 15 -p "Choose an item to list: ")" || exit 0
+musicdl () {
 
-list="$(ia list "$album" | grep -Ei '\.(mp3|flac|ogg|m4a|aac|wav)$')"
+search="$1"
 
-track="$( printf '%s\n%s' "Album" "$list" | dmenu -c -l 10 -p "Download Album or a specific track: ")" || exit 0
+# Sanity check
+[ -z "$search" ] && exit 0
 
-case "$track" in
-    Album) ia download "$album" --glob="*.mp3|*.m4a|*.flac|*.ogg|*.wav|*.aac" && notify-send "Downloaded album $album" && mpc update ;;
-    *) ia download "$album" "$track" && notify-send "Downloaded track $track" ;;
+# List matching items and previews each item list 
+album="$(
+  ia search "$search" |
+    awk -F'"' '{print $4}' |
+    fzf \
+      --prompt="Choose album: " \
+      --height=80% \
+      --layout=reverse \
+      --preview='
+        ia list {} 2>/dev/null |
+        grep -Ei "\.(mp3|flac|ogg|m4a|aac|wav)$" |
+        nl -w2 -s". "
+      ' \
+      --preview-window=right:60%
+)" || exit 0
+
+tracks="$(ia list "$album" | grep -Ei '\.(mp3|flac|ogg|m4a|aac|wav)$')"
+
+# Choose to download the full album or choose certain tracks (you can do so with tab in fzf with the -m option)
+choice="$(
+  printf "Album\n%s\n" "$tracks" |
+    fzf -m \
+      --prompt="Download: " \
+      --height=80% \
+      --layout=reverse \
+      --bind="tab:toggle,shift-tab:toggle-all" \
+      --preview='
+        if [ "{}" = "Album" ]; then
+          ia list "'"$album"'" |
+          grep -Ei "\.(mp3|flac|ogg|m4a|aac|wav)$" |
+          nl -w2 -s". "
+        else
+          printf "Track:\n%s\n" "{}"
+        fi
+      ' \
+      --preview-window=right:60%
+)" || exit 0
+
+# Handle multi-selection correctly
+if echo "$choice" | grep -qx "Album"; then
+    ia download "$album" --glob="*.{mp3,m4a,flac,ogg,wav,aac}" &&
+    notify-send "Downloaded album $album" &&
+    mpc update
+    exit 0
+fi
+
+# Download selected tracks
+while IFS= read -r track; do
+    ia download "$album" "$track" &&
+    notify-send "Downloaded track $track"
+done <<< "$choice"
+}
+
+case "$#" in
+   1) musicdl "$1" ;;
+   *) echo -e "Usage: arc-music-dl <search_term>" ;;
 esac
-
