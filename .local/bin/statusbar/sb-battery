@@ -1,20 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+notify() {
+    notify-send \
+        --expire-time=4000 \
+        --hint=string:x-canonical-private-synchronous:battery \
+        "Battery" "$1"
+}
+
+case "$BLOCK_BUTTON" in
+    1) notify "$(acpi -b | awk -F ': |, ' '{printf "%s\n%s\n", $2, $4}')" ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
 
 perc=$(cat /sys/class/power_supply/BAT1/capacity)
 status=$(cat /sys/class/power_supply/BAT1/status)
 
 if [ "$status" != "Discharging" ]; then
-    icon=''
+    icon='❘ 󰂄'
 elif [ "$perc" -ge 90 ]; then
-    icon=''
+    icon='❘ 󰁹'
 elif [ "$perc" -ge 70 ]; then
-    icon=''
+    icon='❘ 󰁿'
 elif [ "$perc" -ge 40 ]; then
-    icon=''
+    icon='❘ 󰁼'
 elif [ "$perc" -ge 15 ]; then
-    icon=''
+    icon='❘ 󰁻'
 else
-    icon=''
+    icon='❘ 󰂎'
 fi
 
 # Notify when battery < 15%

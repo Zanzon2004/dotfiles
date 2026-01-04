@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 status=$(mpc status 2>/dev/null)
 [ -z "$status" ] && exit 0
@@ -12,15 +12,20 @@ title=$(mpc current --format "%title%" 2>/dev/null)
 # Remove (feat ...) if present
 title=$(echo "$title" | sed -E 's/\s*\((feat|ft|featuring).*\)//i' | sed 's/^[ \t]*//;s/[ \t]*$//')
 
+case "$BLOCK_BUTTON" in
+    1) notify-send "Now Playing" "$(mpc current --format "Title: %title%\nArtist: %artist%\nAlbum: %album%")" ;;
+    2) mpc toggle >/dev/null ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
 # Assign icon based on player state
 if [ "$state" = "[playing]" ]; then
-    icon=' 󰏤'
+    icon='󰏤'
     echo "$icon $title"
 elif [ "$state" = "[paused]" ]; then
-    icon=' ▶'
+    icon=''
     echo "$icon $title"
 else
-    icon=' 󰓛'
+    icon='󰓛'
     echo "$icon Nothing Playing"
 fi
-

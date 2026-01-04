@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
+case "$BLOCK_BUTTON" in
+    1) notify-send "Memory" "$(free -h | awk '/^Mem/ { printf("Used: %s\nTotal: %s", $3, $2) }' | sed 's/i//g')" ;;
+	2) "$TERMINAL" -e htop ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
 free -h | \
 awk '/^Mem/ { printf("%s", $3) }' | \
 sed 's/i//g'
-

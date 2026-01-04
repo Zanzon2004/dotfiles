@@ -1,3 +1,13 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-printf "%(%H:%M %a, %b %e)T\\n"
+case "$BLOCK_BUTTON" in
+    1) notify-send "Date & Time" "$(printf "Time: %(%H:%M:%S)T\nDate: %(%A, %B %d, %Y)T\nDay of year: %(%j)T\nWeek number: %(%V)T\n")" && kill -RTMIN+10 $(pidof dwmblocks) ;;
+	2) day=$(date +%d | sed 's/^0//')
+        cal | sed -E "s/(^|[[:space:]])$day([[:space:]]|$)/\1[$day]\2/"
+        notify-send "Calendar" "$(cal | sed -E "s/(^|[[:space:]])$day([[:space:]]|$)/\1[$day]\2/")"
+        ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+# printf "󰥔 %(%H:%M)T\n"
+printf "󰥔"

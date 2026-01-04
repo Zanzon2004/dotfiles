@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 
-wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
-awk '{ if ($3 == "[MUTED]") print "M"; else printf("%d%%", $2 * 100) }'
+case "$BLOCK_BUTTON" in
+    1) volumectl toggle ;;
+    2) setsid -w -f "$TERMINAL" -e pulsemixer; pkill -RTMIN+10 "${STATUSBAR:-dwmblocks}" ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+vol_info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
+muted=$(echo "$vol_info" | awk '{print $3}')
+vol=$(echo "$vol_info" | awk '{printf "%d", $2 * 100}')
+
+if [ "$muted" = "[MUTED]" ] || [ "$vol" -eq 0 ]; then
+    icon="⋅ "  # muted icon
+else
+    icon="⋅ "  # high volume
+fi
+
+printf "%s %d%%\n" "$icon" "$vol"

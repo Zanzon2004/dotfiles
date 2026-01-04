@@ -1,7 +1,47 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 loc=$(curl -sf ipinfo.io/city)
 [ -z "$loc" ] && exit 0
 
-curl -sf "wttr.in/${loc}?format=%c+%t" \
-  | grep -o '[+-][0-9]\+°C'
+cond=$(curl -sf "wttr.in/${loc}?format=%C")
+
+case "$BLOCK_BUTTON" in
+    1)
+        notify-send "Weather ($loc)" "$(
+            curl -sf "wttr.in/${loc}?format=Location:+%l\nCondition:+%C\nTemp:+%t\nFeels:+%f\nWind:+%w\nHumidity:+%h"
+        )"
+        kill -RTMIN+5 "$(pidof dwmblocks)"
+        ;;
+    3)
+        "$TERMINAL" -e "$EDITOR" "$0"
+        ;;
+esac
+
+case "$cond" in
+    *Sunny*|*Clear*)
+        icon="󰖙"
+        ;;
+    *Partly*|*Cloudy*)
+        icon="󰖐"
+        ;;
+    *Overcast*)
+        icon=""
+        ;;
+    *Rain*|*Drizzle*)
+        icon="󰖗"
+        ;;
+    *Thunder*)
+        icon="󰖓"
+        ;;
+    *Snow*|*Sleet*)
+        icon="󰖘"
+        ;;
+    *Fog*|*Mist*|*Haze*)
+        icon="󰖑"
+        ;;
+    *)
+        icon=""
+        ;;
+esac
+
+printf "%s" "$icon "

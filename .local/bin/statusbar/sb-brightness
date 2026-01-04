@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
-brightnessctl -m | \
-awk -F, '{ print substr($4, 1, length($4)-1) "%" }'
+case "$BLOCK_BUTTON" in
+    1) notify-send "Brightness" "$(brightnessctl -m | awk -F, '{ printf("Device: %s\nCurrent: %s\nMax: %s", $1, $4, $5) }')" ;;
+    3) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
 
+bright=$(brightnessctl -m | awk -F, '{ gsub("%","",$4); print $4 }')
+
+if [ "$bright" -le 20 ]; then
+    icon="⋅ 󰃞"
+elif [ "$bright" -le 50 ]; then
+    icon="⋅ 󰃟"
+elif [ "$bright" -le 80 ]; then
+    icon="⋅ 󰃝"
+else
+    icon="⋅ 󰃠"
+fi
+
+printf "%s %s%%\n" "$icon" "$bright"
